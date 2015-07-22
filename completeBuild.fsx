@@ -61,31 +61,13 @@ Target "NUnitTest" (fun _ ->
                    OutputFile = testDir + @"TestResults.xml"})
 )
 
-Target "FxCop" (fun _ ->
-    !+ (buildDir + @"\**\*.dll")
-      ++ (buildDir + @"\**\*.exe")
-        |> Scan
-        |> FxCop (fun p ->
-            {p with
-                ReportFileName = testDir + "FXCopResults.xml";
-                ToolPath = fxCopRoot})
-)
-
-Target "Zip" (fun _ ->
-    !+ (buildDir + "\**\*.*")
-        -- "*.zip"
-        |> Scan
-        |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
-)
 
 // Dependencies
 "Clean"
   ==> "SetVersions"
   ==> "CompileApp"
   ==> "CompileTest"
-  ==> "FxCop"
   ==> "NUnitTest"
-  ==> "Zip"
 
 // start build
-RunTargetOrDefault "Zip"
+RunTargetOrDefault "NUnitTest"
