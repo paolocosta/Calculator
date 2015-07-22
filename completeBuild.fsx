@@ -70,4 +70,4 @@ Target "NUnitTest" (fun _ ->
   ==> "NUnitTest"
 
 // start build
-RunTargetOrDefault "NUnitTest"
+RunTargetOrDefault "CompileTest"
